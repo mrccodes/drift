@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Drift-a-doodle-doo</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <!-- Add import map to resolve bare module names -->
+
+</head>
+<body>
+  <div id="ui-container">
+    <div id="points">0</div>
+    <div id="level">Level 1</div>
+    <div id="coins-remaining">Coins until level-up: 0</div>
+    <div id="obstacles">Number of obstacles: 0</div>
+  </div>
+  <div id="debug-container">
+    <div>Debug Information</div>
+    <div>Debug Mode Active</div>
+    <div>Press 'C' to toggle camera mode</div>
+    <div id="gui-container"></div>
+  </div>
+  <div class="center" id="game-over">GAME OVER</div>
+  <div class="animate__animated animate__bounceInDown" id="plus-ten">+10</div>
+  <button id="restart-button">Restart</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.min.css" rel="stylesheet">
+  
+  <!-- Updated Three.js to a consistent, more recent version -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.114.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.114.0/examples/js/controls/OrbitControls.js"></script>
+    <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
+
+  
+  <script type="module" src="assets/js/init.js"></script>
+</body>
+</html>

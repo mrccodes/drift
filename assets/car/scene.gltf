@@ -1,0 +1,292 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 2581,
+      "max": [
+        0.9171509742736816,
+        1.3859590291976929,
+        1.1822047233581543
+      ],
+      "min": [
+        -2.7914671897888184,
+        -1.3859590291976929,
+        -2.5626447200775146
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 30972,
+      "componentType": 5126,
+      "count": 2581,
+      "max": [
+        1.0,
+        1.0,
+        0.9998698234558105
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 2581,
+      "max": [
+        0.9999990463256836,
+        1.0,
+        0.9999942183494568,
+        1.0
+      ],
+      "min": [
+        -0.9996666312217712,
+        -1.0,
+        -0.9999719858169556,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 2581,
+      "max": [
+        0.9953978657722473,
+        0.9956164956092834
+      ],
+      "min": [
+        0.009650595486164093,
+        0.0065066032111644745
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 20648,
+      "componentType": 5126,
+      "count": 2581,
+      "max": [
+        0.9953978657722473,
+        0.9956164956092834
+      ],
+      "min": [
+        0.009650595486164093,
+        0.0065066032111644745
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 12819,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "assetfactory (https://sketchfab.com/assetfactory)",
+      "license": "SKETCHFAB Standard (https://sketchfab.com/licenses)",
+      "source": "https://sketchfab.com/3d-models/kids-pool-float-car-a9d846aa86944911bd5f983a6c9f2faf",
+      "title": "Kids pool float car"
+    },
+    "generator": "Sketchfab-16.33.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 51276,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 41296,
+      "byteOffset": 51276,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 61944,
+      "byteOffset": 92572,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 41296,
+      "byteOffset": 154516,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 195812,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/PoolFloat1_baseColor.png"
+    },
+    {
+      "uri": "textures/PoolFloat1_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "PoolFloat1",
+      "normalTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.14954318492352833
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Torus_PoolFloat1_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "PoolFloat1.fbx"
+    },
+    {
+      "children": [
+        3
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        1.8693720693629956e-05,
+        59.54998214402705,
+        80.3355439805178,
+        0.0,
+        -99.9999999999951,
+        3.128459566958952e-05,
+        7.935412327242375e-08,
+        0.0,
+        -2.5085394739221556e-05,
+        -80.33554398051388,
+        59.54998214402999,
+        0.0,
+        5.0762901082634926e-05,
+        114.6341552734375,
+        94.6102523803711,
+        1.0
+      ],
+      "name": "Torus"
+    },
+    {
+      "mesh": 0,
+      "name": "Torus_PoolFloat1_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    }
+  ]
+}
