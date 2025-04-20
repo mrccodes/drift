@@ -266,7 +266,7 @@ export function spawnCoin() {
         collider: sensorCollider,
         type: 'coin'
     });
-    const coinsUntilNextLevel = (CONFIG.level.pointsToAdvance - points) / 10;
+    const coinsUntilNextLevel = ((CONFIG.level.pointsToAdvance * level ) - points) / 10;
     document.getElementById('coins-remaining').textContent = `Coins until level-up: ${coinsUntilNextLevel}`;
 
     // Update debug visualization when adding new physics objects
@@ -306,12 +306,13 @@ coin,
       }
     }, 0);
 
-    const coinsUntilNextLevel = (CONFIG.level.pointsToAdvance - points) / 10;
+    const coinsUntilNextLevel = ((CONFIG.level.pointsToAdvance * level) - points)  / 10;
     document.getElementById('coins-remaining').textContent = `Coins until level-up: ${coinsUntilNextLevel}`;
   }
 
 export function levelUp() {
     level++;
+ 
     document.getElementById('level').textContent = `Level ${level}`;
     ({ world, scene, physicsObjects,
     } = sceneModule.createObstacles(
