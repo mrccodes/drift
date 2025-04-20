@@ -310,9 +310,7 @@ coin,
     document.getElementById('coins-remaining').textContent = `Coins until level-up: ${coinsUntilNextLevel}`;
   }
 
-export function levelUp(
-    level
-) {
+export function levelUp() {
     level++;
     document.getElementById('level').textContent = `Level ${level}`;
     ({ world, scene, physicsObjects,
