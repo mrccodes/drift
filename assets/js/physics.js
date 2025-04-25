@@ -110,4 +110,37 @@ export function updateCarPhysics(carBody, carMesh, level, controls, tireTracksSy
     return minDamp + (maxDamp - minDamp) * t;
   }
 
-  
+  export function removePhysicsObjects(physicsObjects, world, coins) {
+    if (world) {
+      physicsObjects.forEach(obj => {
+        // Remove colliders first
+        if (obj.collider) {
+            try {
+                world.removeCollider(obj.collider, true); // true to also remove contacts
+            } catch (e) {
+                console.warn("Could not remove collider:", e);
+            }
+        }
+        
+        // Then remove rigid bodies
+        if (obj.body) {
+              try {
+                  world.removeRigidBody(obj.body);
+              } catch (e) {
+                  console.warn("Could not remove body:", e);
+              }
+          }
+      });
+      
+      // For coins, handle their additional colliders
+      coins.forEach(coin => {
+          if (coin.sensor && !coin.collected) {
+              try {
+                  world.removeCollider(coin.sensor, true);
+              } catch (e) {
+                  console.warn("Could not remove coin sensor:", e);
+              }
+          }
+      });
+  }
+}

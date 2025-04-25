@@ -4,6 +4,8 @@ body { margin: 0; overflow: hidden; }
   width: 100vw; height: 100vh;
   background-color: #6b9efc;
   color: #fff;
+  font-size: 48px;
+  font-family: 'Gugi', sans-serif;
 }
 #loading .wrapper {
   text-align: center;

@@ -1,6 +1,6 @@
 import * as sceneModule from './scene.js';
 import { CONFIG, debugLog } from './config.js';
-import { updateCarPhysics, updatePhysicsObjects } from './physics.js';
+import { removePhysicsObjects, updateCarPhysics, updatePhysicsObjects } from './physics.js';
 import { controls, setupInput } from './controls.js';
 import { createScene } from './scene.js';
 import { 
@@ -216,6 +216,8 @@ export function resetGame() {
     document.getElementById('level').textContent = `Level ${level}`;
     document.getElementById('game-over').style.display = 'none';
     document.getElementById('restart-button').style.display = 'none';
+    removePhysicsObjects(physicsObjects, world, coins);
+
 
     physicsObjects.length = 0;
     coins.length = 0;
