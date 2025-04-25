@@ -11,8 +11,10 @@ export function createScene(
     carCollider,
     level,
     obstacleBoxes,
+    isLoading,
     RAPIER) {
   // Ground
+  isLoading.level = true;
   const groundGeo = new THREE.PlaneGeometry(CONFIG.environment.groundSize, CONFIG.environment.groundSize);
   const groundMat = new THREE.MeshPhongMaterial({ color: 0x333333 });
   const groundMesh = new THREE.Mesh(groundGeo, groundMat);
@@ -55,7 +57,7 @@ export function createScene(
   const tireTracksSystem = createTireTracksSystem(scene);
 
   // Car - using GLTF model instead of a box
-  let carReady = false;
+  isLoading.car = true; 
   const carSize = { width: 2, height: 1, length: 4 }; // Default size for physics
   const carGroup = new THREE.Group(); // Group to hold the car model
   carGroup.position.set(0, 1.0, 0); // Slightly lower than the box was
@@ -80,7 +82,7 @@ export function createScene(
   const loader = new GLTFLoader();
   loader.load('./assets/car/scene.gltf', function(gltf) {
     debugLog("Car model loaded successfully");
-    
+    isLoading.car = false;
     // Prepare the model
     const model = gltf.scene;
     
@@ -105,7 +107,8 @@ export function createScene(
       tempCarMat.opacity = 0;
     }
     
-    carReady = true;
+    isLoading.car = false;
+    isLoading.level = false;
   }, 
   // Progress callback
   function(xhr) {
@@ -151,6 +154,7 @@ export function createScene(
     scene, 
     physicsObjects,
     obstacleBoxes,
+    isLoading,
     level
   ));
 
@@ -200,7 +204,8 @@ function createBoundaryBox(scene) {
 
 
 
-export function createObstacles(RAPIER, world, scene, physicsObjects, obstacleBoxes, level=1) {
+export function createObstacles(RAPIER, world, scene, physicsObjects, obstacleBoxes, isLoading, level=1) {
+    isLoading.obstacles = true;
     const count = level * CONFIG.level.boxIncreasePerLevel;
     for (let i=0; i<count; i++) {
         const boxGeo = new THREE.BoxGeometry(1,1,1);
@@ -233,13 +238,16 @@ export function createObstacles(RAPIER, world, scene, physicsObjects, obstacleBo
     }
     
     document.getElementById('obstacles').textContent = `Number of obstacles: ${obstacleBoxes.length}`;
+    isLoading.obstacles = false;
     return {
         world, scene, physicsObjects,
     };
 }
 
 // Function to create the tire tracks system
-function createTireTracksSystem(scene) {
+function createTireTracksSystem(
+  scene,
+) {
   const tireTracksSystem = {
     tracks: [],
     maxTracks: 1000, // Maximum number of track segments to keep
@@ -374,7 +382,7 @@ function createTireTracksSystem(scene) {
       }
     }
   };
-  
+
   return tireTracksSystem;
 }
 

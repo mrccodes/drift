@@ -5,6 +5,9 @@
   <title>Drift-a-doodle-doo</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <link rel="shortcut icon" href="assets/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gugi&family=Keania+One&family=Press+Start+2P&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@300..700&family=Tourney:ital,wght@0,100..900;1,100..900&family=Warnes&display=swap" rel="stylesheet">
 
 
   <link rel="stylesheet" href="assets/css/style.css" />
@@ -25,7 +28,21 @@
     <div id="gui-container"></div>
   </div>
   <div class="center" id="game-over">GAME OVER</div>
-  <div class="animate__animated animate__bounceInDown" id="plus-ten">+10</div>
+  <div id="loading" class="center">
+    <div class="wrapper center">
+      <div class="text">Loading</div>
+    </div>
+    <div class="spinner"></div>
+  </div>
+  <div class="center" id="instructions">
+    <p>Use the WASD keys to control the car and SPACEBAR to drift.</p>
+    <p>Collect coins to earn points and level up.</p>
+    <p>Avoid obstacles to keep your car safe.</p>
+    <p>Collect coins while drifting to double points.</p>
+    <br />
+    <p>Press any button to continue.</p>
+  </div>
+  <div class="animate__animated animate__bounceInDown" id="plus-points"></div>
   <button id="restart-button">Restart</button>
 
   <script src="https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.min.js"></script>

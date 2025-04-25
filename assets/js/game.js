@@ -10,11 +10,25 @@ import {
   shouldUseGameCamera,
   initDebugPanel
 } from './debug.js';
+import { gameIsLoading, randomRange } from './utils.js';
 let scene, camera, renderer, world, eventQueue, physicsObjects=[], coins=[], obstacleBoxes=[];
 let restartKeyListener, RAPIER, carMesh, carCollider, carBody, coinSpawnTimer, points=0, level=1;
 let tireTracksSystem; // Add this variable to store the tire tracks system
+let loadingInterval;
+let minLoadTime = 1000; // Minimum loading time in milliseconds
+let loadStartTime = Date.now();
+let instructionsEventListener = null;
+let isFirstStart = true;
+
+const isLoading = {
+  car: true,
+  level: true,
+  obstacles: true,
+  coins: true,
+}
 
 export function initGame(rapier) {
+    loadingScreen(true);
     scene = new THREE.Scene();
     RAPIER = rapier; // Store RAPIER globally for use in other modules
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -34,7 +48,7 @@ export function initGame(rapier) {
         physicsObjects,
         level,
         tireTracksSystem, // Make sure we capture tireTracksSystem here
-     } = sceneModule.createScene(world, scene, physicsObjects, carMesh, carBody, carCollider, level, obstacleBoxes, RAPIER));
+     } = sceneModule.createScene(world, scene, physicsObjects, carMesh, carBody, carCollider, level, obstacleBoxes, isLoading, RAPIER));
 
      camera.position.set(0, 5, -10);
      camera.lookAt(carMesh.position);
@@ -56,11 +70,21 @@ export function initGame(rapier) {
 
      window.addEventListener("resize", onWindowResize);
      document.querySelector('#restart-button').addEventListener('click', restartGame);
-
-     setupInput();
      startCoinSpawning();
      animate(); // Don't pass tireTracksSystem as an argument
-
+     
+    }
+    
+    function showInstructions() {
+      const instructions = document.getElementById('instructions');
+      instructions.style.display = 'block';
+      instructionsEventListener = document.addEventListener('keydown', (e) => {
+      setupInput();
+      instructions.style.display = 'none';
+      document.removeEventListener('keydown', instructionsEventListener);
+      instructionsEventListener = null;
+  }
+  );
 }
 
 function onWindowResize() {
@@ -69,7 +93,13 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
+
+
 function animate() {
+  if (!gameIsLoading(isLoading)) {
+    loadingScreen(false);
+  }
+
   requestAnimationFrame(animate);
   if (!CONFIG.game.isOver || (CONFIG.game.isOver && CONFIG.game.isFalling)) {
     world.step(eventQueue);
@@ -122,10 +152,12 @@ function animate() {
 }
 
 export function startCoinSpawning() {
+   isLoading.coins = true;
     coinSpawnTimer = setInterval(spawnCoin, CONFIG.coins.spawnInterval);
     Array.from({length: 5}).forEach(() => {
         spawnCoin();
     });
+    isLoading.coins = false;
 }
 export function updateCamera() {
   // If we're using debug orbit controls, skip the game camera update
@@ -168,7 +200,7 @@ export function restartGame() {
       physicsObjects,
       level,
       tireTracksSystem, // Make sure we capture tireTracksSystem here too
-  } = createScene(world, scene, physicsObjects, carMesh, carBody, carCollider, level, obstacleBoxes, RAPIER));
+  } = createScene(world, scene, physicsObjects, carMesh, carBody, carCollider, level, obstacleBoxes, isLoading, RAPIER));
   startCoinSpawning();
 
   if (CONFIG.debug.physics.enabled) {
@@ -275,8 +307,9 @@ export function spawnCoin() {
     }
   }
 
-export  function renderPlusTen() {
-    const plusTen = document.getElementById('plus-ten');
+export  function renderPlusPoints(points) {
+    const plusTen = document.getElementById('plus-points');
+    plusTen.textContent = `+${points || 10}`;
     plusTen.style.display = 'block';
     setTimeout(() => {
       plusTen.style.display = 'none';
@@ -288,9 +321,15 @@ coin,
 ) {
     coin.collected = true;
     scene.remove(coin.mesh);
-    points += CONFIG.coins.value;
+    if (controls.handbrake) {
+      points += CONFIG.coins.value * 2; // Double points if handbrake is engaged
+    } else {
+      points += CONFIG.coins.value;
+    }
     document.getElementById('points').textContent = `${points}`;
-    renderPlusTen();
+    renderPlusPoints(
+      controls.handbrake ? CONFIG.coins.value * 2 : CONFIG.coins.value
+    );
     if (points >= level * CONFIG.level.pointsToAdvance && level < CONFIG.level.maxLevel) levelUp();
 
     setTimeout(() => {
@@ -321,6 +360,7 @@ export function levelUp() {
         scene, 
         physicsObjects, 
         obstacleBoxes,
+        isLoading,
         level, 
     ));
     
@@ -330,3 +370,52 @@ export function levelUp() {
     }
   }
 
+
+export function loadingScreen(value) {
+  const fonts = [
+    '"Space Grotesk", sans-serif',
+    '"Press Start 2P", system-ui',
+    '"Silkscreen", sans-serif;',
+    '"Gugi", sans-serif;',
+    '"Tourney", sans-serif;',
+    '"Warnes", cursive;',
+    '"Keania One", sans-serif;'
+  ];
+
+  if (value == false && loadStartTime == null) {
+    return;
+  }
+
+  if (value == true) {
+    loadStartTime = Date.now();
+    document.getElementById('loading').style.display = 'block';
+    if (loadingInterval) clearInterval(loadingInterval);
+    let dotCount = 0;
+    loadingInterval = setInterval(() => {
+      dotCount = (dotCount + 1) % 4;
+      document.querySelector('#loading .text').textContent = 'Loading' + '.'.repeat(dotCount);
+    }, 500);
+  } else {
+    const elapsedTime = Date.now() - loadStartTime;
+    const remainingTime = Math.max(minLoadTime - elapsedTime, 0);
+    loadStartTime = null; // Reset load start time
+    if (remainingTime > 0) {
+      setTimeout(() => {
+        document.getElementById('loading').style.display = 'none';
+        if (loadingInterval) clearInterval(loadingInterval);
+      }, remainingTime);
+      if (isFirstStart) {
+        isFirstStart = false;
+        showInstructions();
+      }
+    } else {
+      document.getElementById('loading').style.display = 'none';
+      if (loadingInterval) clearInterval(loadingInterval);
+      if (isFirstStart) {
+        isFirstStart = false;
+        showInstructions();
+      }
+    }
+
+  }
+}
